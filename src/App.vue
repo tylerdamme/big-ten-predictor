@@ -1,17 +1,40 @@
 <template>
   <div id="app">
+    <navbar/>
     <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import axios from 'axios';
+import Navbar from './components/Navbar.vue';
 
 export default {
   name: 'App',
   components: {
-    HelloWorld
+    Navbar,
+  },
+
+  data() {
+    return {
+      teams: [],
+      games: [],  
+    }
+  },
+
+  mounted() {
+    axios.get("https://api.collegefootballdata.com/teams/fbs").then (res => {
+      let teamResponse = res.data;
+      let bigTen = teamResponse.filter(team => team.conference === "Big Ten");
+      this.teams = bigTen;
+      console.log(this.teams);
+    });
+
+    axios.get("https://api.collegefootballdata.com/games?year=2020&seasonType=regular&conference=B1G").then (res => {
+        let gameResponse = res.data;
+        this.games = gameResponse;
+        console.log(this.games);
+    });
   }
 }
 </script>
