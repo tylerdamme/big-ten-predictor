@@ -1,6 +1,7 @@
 <template>
   <div id="app">
     <navbar/>
+    <gamesItem v-for="game in games" :game="game" v-bind:key="game.id"/>
     <img alt="Vue logo" src="./assets/logo.png">
   </div>
 </template>
@@ -8,11 +9,13 @@
 <script>
 import axios from 'axios';
 import Navbar from './components/Navbar.vue';
+import GamesItem from './components/GamesItem.vue';
 
 export default {
   name: 'App',
   components: {
     Navbar,
+    GamesItem,
   },
 
   data() {
